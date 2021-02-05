@@ -23,6 +23,38 @@ python overlap_checker.py
 
 
 
+
+### 3) Check diversity of orthogroups ###
+
+This script calculates Shannon diversity index and Eveness. A plot is generate to check for correlation between these values and the orthogroup size.
+
+python diversity_check.py
+							--out <OUTPUT_FOLDER>
+							--in <INPUT_OG_FILE>
+							
+							
+### 4) Annotation of orthogroups ###
+
+These scripts handle two important steps of the annotation process. In addition, a BLASTp search against the A. thaliana peptide sequence set is necessary.
+
+python annotate_orthogroups1.py
+							--out <OUTPUT_FILE>
+							--og <ORTHOGROUP_FILE>
+							--in <INPUT_FASTA_FILE_FOLDER>
+							
+
+RUN BLASTp search on compute cluster
+
+python annotate_orthogroups2.py
+							--out <OUTPUT_FILE>
+							--og <ORTHOGROUP_FILE>
+							--in <BLAST_RESULT_FILE>
+							feature requests and bug reports: bpucker@cebitec.uni-bielefeld.de
+
+
+
+
+
 ### References ###
 
 
