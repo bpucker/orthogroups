@@ -1,5 +1,5 @@
 # orthogroups
-script related to the filtering and analysis of orthogroups in the Caryophyllales
+Scripts related to the filtering and analysis of orthogroups in the Caryophyllales. [OrthoFinder2](https://github.com/davidemms/OrthoFinder) was used for the initial identification of orthogroups.
 
 
 ### 1) Remove orthogropus with low taxa represenation (likely contamination/artifacts) ###
@@ -21,8 +21,6 @@ python filter_OG_by_taxa.py
 `--taxa` specifies the minimal number of taxa to be reprented in an orthogroup to keep the group. Orthogroups with less than this number of taxa are dropped.
 
 `--optimize` activates an iterative process which performs the filtering for different taxa cutoffs and outputs the results to STDOUT.
-
-
 
 
 
@@ -49,19 +47,36 @@ python overlap_checker.py
 
 This script calculates Shannon diversity index and Eveness. A plot is generate to check for correlation between these values and the orthogroup size.
 
+
+```
 python diversity_check.py
-							--out <OUTPUT_FOLDER>
-							--in <INPUT_OG_FILE>
+--in <INPUT_OG_FILE>
+--out <OUTPUT_FOLDER>
+```          
+
+`--in` specifies the OrthoFinder2 result will be analyzed.
+
+`--out` specifies the output folder where all results will be stored.
+
 							
 							
 ### 4) Annotation of orthogroups ###
 
 These scripts handle two important steps of the annotation process. In addition, a BLASTp search against the A. thaliana peptide sequence set is necessary.
 
+```
 python annotate_orthogroups1.py
-							--out <OUTPUT_FILE>
-							--og <ORTHOGROUP_FILE>
-							--in <INPUT_FASTA_FILE_FOLDER>
+--in <INPUT_FASTA_FILE_FOLDER>
+--out <OUTPUT_FILE>
+--og <ORTHOGROUP_FILE>
+```          
+
+`--in` specifies the folder with all underlying FASTA files. Sequences from all files will be loaded to construct a combined query FASTA file.
+
+`--out` specifies the combined query FASTA file. Sequences will be stored in this file with the orthogroup name included as prefix in the sequence name.
+
+`--og` specifies the OrthoFinder2 result file which contains the sequence IDs grouped into orthogroups.
+
 							
 
 RUN BLASTp search on compute cluster
@@ -70,7 +85,7 @@ python annotate_orthogroups2.py
 							--out <OUTPUT_FILE>
 							--og <ORTHOGROUP_FILE>
 							--in <BLAST_RESULT_FILE>
-							feature requests and bug reports: bpucker@cebitec.uni-bielefeld.de
+						
 
 
 
