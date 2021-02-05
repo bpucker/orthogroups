@@ -6,10 +6,24 @@ script related to the filtering and analysis of orthogroups in the Caryophyllale
 
 This script takes the orthogroup.tsv file produced by OrthoFinder2 and transfers only orthogroup with a certain level of taxa representation into a new file. The --optimize options evaluates different cutoff values and supports the identification of a suitable one.
 
-filter_OG_by_taxa.py
-							--out <OUTPUT_OG_FILE>
-							--in <INPUT_OG_FILE>
-							--taxa <MINIMAL_TAXA_NUMBER> | --optimize
+
+```
+python filter_OG_by_taxa.py
+--in <INPUT_OG_FILE>
+--out <OUTPUT_OG_FILE>
+--taxa <MINIMAL_TAXA_NUMBER> | --optimize
+```          
+
+`--in` specifies the OrthoFinder2 result while which contains the orthogroup sequence IDs (TSV).
+
+`--out` specifies the output file of this filtering process.
+
+`--taxa` specifies the minimal number of taxa to be reprented in an orthogroup to keep the group. Orthogroups with less than this number of taxa are dropped.
+
+`--optimize` activates an iterative process which performs the filtering for different taxa cutoffs and outputs the results to STDOUT.
+
+
+
 
 
 ### 2) Check overlap between (sub)samples ###
