@@ -30,11 +30,18 @@ python filter_OG_by_taxa.py
 
 This script checks the overlap between one reference orthogroups set (the smallest one) and different subsamples of one large dataset to quantify the amount of orthogroups that are splitted when analysing larger datasets.
 
+```
 python overlap_checker.py
-							--ref <REFERENCE_ORTHOGROPU>
-							--ogs <ORTHOGROUP_FILES>
-							--out <OUTPUT_FOLDER>
+--ref <REFERENCE_ORTHOGROUP>
+--ogs <ORTHOGROUP_FILES>
+--out <OUTPUT_FOLDER>
+```          
 
+`--ref` specifies the OrthoFinder2 result while will serve as the reference orthogroup set.
+
+`--ogs` specifies the OrthoFinder2 results which will be analyzed. This can be a single file or a comma-separated list of filenames.
+
+`--out` specifies the result outputfile.
 
 
 
