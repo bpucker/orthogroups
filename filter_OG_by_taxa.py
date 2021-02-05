@@ -1,5 +1,5 @@
 ### Boas Pucker ###
-### v0.1 ###
+### v0.11 ###
 ### bpucker@cebitec.uni-bielefeld.de ###
 
 
@@ -49,7 +49,8 @@ def main( arguments ):
 						dropped_OGs += 1
 					line = f.readline()
 		
-		print "number of surviving OGs: " + str( kept_OGs ) + "\tnumber of dropped OGs: " + str( dropped_OGs ) + "\tcutoff: " + str( taxa )
+		sys.stdout.write( "number of surviving OGs: " + str( kept_OGs ) + "\tnumber of dropped OGs: " + str( dropped_OGs ) + "\tcutoff: " + str( taxa ) + "\n" )
+		sys.stdout.flush()
 
 
 if '--out' in sys.argv and '--in' in sys.argv and '--taxa' in sys.argv:
