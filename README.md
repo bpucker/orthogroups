@@ -79,15 +79,20 @@ python annotate_orthogroups1.py
 
 							
 
-RUN BLASTp search on compute cluster
+#### running BLASTp search on compute cluster ###
 
+```
 python annotate_orthogroups2.py
-							--out <OUTPUT_FILE>
-							--og <ORTHOGROUP_FILE>
-							--in <BLAST_RESULT_FILE>
-						
+--in <BLAST_RESULT_FILE>
+--out <OUTPUT_FILE>
+--og <ORTHOGROUP_FILE>
+```          
 
+`--in` specifies the BLAST result file. This can be reduced to the best hit per query to save computational resources.
 
+`--out` specifies the result output file. The three best hits per orthogroup are stored.
+
+`--og` specifies the OrthoFinder2 result file which contains the sequence IDs grouped into orthogroups.
 
 
 
