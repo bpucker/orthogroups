@@ -96,6 +96,32 @@ python annotate_orthogroups2.py
 
 
 
+### 5) Comparison of groups and identification of enriched orthogroups ###
+
+Two contrasting groups can be compared to identify orthogroups that show overrepresentation of one of the groups. This can reveal lineage specific expansion and shrinking of gene families.
+
+```
+python enrichment_check.py
+--in <BLAST_RESULT_FILE>
+--out <OUTPUT_FOLDER>
+--taxon <TAXON_FILE>
+
+optional:
+--anno <ORTHOGROUP_FILE>
+```          
+
+`--in` specifies an OrthoFinder2 result file which contains the sequence IDs in orthogroups.
+
+`--out` specifies the output folder in which all result files will be saved. This folder will be created if it does not exist already.
+
+`--taxon` specifies an the group membership of each taxon. This can be a simple table with taxon name in one column and group information in another column. Default: taxon name in second column and group information in fourth column.
+
+`--anno` specifies an annotation file. The first column should contain the orthogroup ID and all following columns can contain annotation information. A TAB-separated file is expected. After extracting the ID, all columns starting with the second column will be merged into one annotation string. 
+
+
+
+
+
 ### References ###
 
 
