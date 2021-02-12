@@ -81,18 +81,54 @@ python annotate_orthogroups1.py
 
 #### running BLASTp search on compute cluster ###
 
+
+```
+python blast2best.py
+--in <BLAST_RESULT_FILE>
+--out <OUTPUT_FILE>
+```
+
+`--in` specifies the BLAST result file.
+
+`--out` specifies the output file which will contain the best BLAST hit per query (based on score).
+
+
+
 ```
 python annotate_orthogroups2.py
 --in <BLAST_RESULT_FILE>
 --out <OUTPUT_FILE>
 --og <ORTHOGROUP_FILE>
+
+optional:
+--anno <ANNOTATION_FILE>
 ```          
 
 `--in` specifies the BLAST result file. This can be reduced to the best hit per query to save computational resources.
 
-`--out` specifies the result output file. The three best hits per orthogroup are stored.
+`--out` specifies the result output file. All hits per orthogroup are stored in this file in the last column. In addition, a frequency output file will be generated that can be subjected to the next script to get the best three hits.
 
 `--og` specifies the OrthoFinder2 result file which contains the sequence IDs grouped into orthogroups.
+
+`--anno` specifies an annotation file with the AGI in the first column, gene name in the second, and a functional annotation in the third column.
+
+
+
+```
+python annotate_orthogroups3.py
+--in <BLAST_RESULT_FILE>
+--out <OUTPUT_FILE>
+--anno <ANNOTATION_FILE>
+```          
+
+`--in` specifies the frequency input file wich was produced by the previous script.
+
+`--out` specifies the result output file. The three best hits per orthogroup are stored and the frequency of these AGISs among all hits of this orthogroup are indicated by a percent value.
+
+`--anno` specifies an annotation file with the AGI in the first column, gene name in the second, and a functional annotation in the third column.
+
+
+
 
 
 
