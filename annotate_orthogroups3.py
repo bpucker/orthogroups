@@ -5,8 +5,10 @@
 
 __usage__ = """ python annotate_orthogroups3.py
 							--out <OUTPUT_FILE>
+							--in <FREQUENCY_INPUT_FILE>
+							
+							optional:
 							--anno <ANNOTATION_FILE>
-							--in <BLAST_RESULT_FILE>
 							feature requests and bug reports: bpucker@cebitec.uni-bielefeld.de
 			"""
 
