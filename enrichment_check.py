@@ -1,14 +1,18 @@
 ### Boas Pucker ###
 ### bpucker@cebitec.uni-bielefeld.de ###
-### v0.15 ###
+### v0.2 ###
 
 __usage__ = """
 					python enrichment_check.py
 					--in <INPUT_FILE>
 					--out <OUTPUT_FOLDER>
+					--taxon <TAXON_FILE>
 					
 					optional:
 					--anno <ANNOTATION_FILE>
+					--cut <LOG2_FOLDCHANGE_CUTOFF>
+					--a <GROUP_A_LABEL>
+					--b <GROUP_B_LABEL>
 					"""
 
 
@@ -20,7 +24,7 @@ from operator import itemgetter
 # --- end of imports --- #
 
 
-def load_orthogroups( orthofinder_result_file, pigment_states ):
+def load_orthogroups( orthofinder_result_file, pigment_states, pigment_state_A, pigment_state_B ):
 	"""! @brief load orthogroups into nested dictionary """
 	
 	orthogroups = {}
@@ -49,9 +53,9 @@ def load_orthogroups( orthofinder_result_file, pigment_states ):
 				group_size += len( subparts )
 				try:
 					pigment = pigment_states[ samples[ idx ] ][0]	#this could also be used to look at individual lineages
-					if pigment == "A":
+					if pigment == pigment_state_A:
 						A_size += len( subparts )
-					elif pigment == "B":
+					elif pigment == pigment_state_B:
 						B_size += len( subparts )
 				except KeyError:
 					pass
@@ -78,7 +82,7 @@ def load_pigment_states( taxon_file ):
 	return pigment_state
 
 
-def summarize_orthogroup_sizes( A_sizes, B_sizes, figfile ):
+def summarize_orthogroup_sizes( A_sizes, B_sizes, figfile, pigment_state_A, pigment_state_B ):
 	"""! @brief analyze group sizes """
 	
 	A = A_sizes.values()
@@ -94,8 +98,8 @@ def summarize_orthogroup_sizes( A_sizes, B_sizes, figfile ):
 		Ay_values.append( A.count( i+1 ) )
 		By_values.append( B.count( i+1 ) )
 	
-	ax.plot( x_values, Ay_values, linestyle="--", marker="o", color="blue", label="A" )
-	ax.plot( x_values, By_values, linestyle="--", marker="o", color="red", label="B" )
+	ax.plot( x_values, Ay_values, linestyle="--", marker="o", color="blue", label=pigment_state_A )
+	ax.plot( x_values, By_values, linestyle="--", marker="o", color="red", label=pigment_state_B )
 	
 	ax.set_xlim( 0, 50 )
 	
@@ -180,19 +184,32 @@ def main( arguments ):
 	else:
 		anno = {}
 	
-	l2fc_cutoff = 2
+	if '--a' in arguments:
+		pigment_state_A = arguments[ arguments.index('--a')+1 ]
+	else:
+		pigment_state_A = "A"
+	
+	if '--b' in arguments:
+		pigment_state_B = arguments[ arguments.index('--b')+1 ]
+	else:
+		pigment_state_B = "B"
+	
+	if '--cut' in arguments:
+		l2fc_cutoff = float( arguments[ arguments.index('--cut')+1 ] )
+	else:
+		l2fc_cutoff = 2
 	
 	if not os.path.exists( output_folder ):
 		os.makedirs( output_folder )
 	
 	pigment_states = load_pigment_states( taxon_file )
-	orthogroups, og_sizes, A_sizes, B_sizes = load_orthogroups( orthofinder_result_file, pigment_states )
+	orthogroups, og_sizes, A_sizes, B_sizes = load_orthogroups( orthofinder_result_file, pigment_states, pigment_state_A, pigment_state_B )
 	
 	# --- analyze size of orthogroups --- #
 	fig_file1 = output_folder + "pigment_state_group_sizes.pdf"
-	A_avg, B_avg = summarize_orthogroup_sizes( A_sizes, B_sizes, fig_file1 )
-	print "A median: " + str( A_avg )
-	print "B median: " + str( B_avg )
+	A_avg, B_avg = summarize_orthogroup_sizes( A_sizes, B_sizes, fig_file1, pigment_state_A, pigment_state_B )
+	print pigment_state_A + " median: " + str( A_avg )
+	print pigment_state_B + " median: " + str( B_avg )
 	
 	# --- compare orthogroup contribution between pigment states --- #
 	fig_file2 = output_folder + "pigment_state_group_size_comparison.pdf"
