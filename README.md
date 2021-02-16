@@ -163,6 +163,11 @@ optional:
 independent_enrichment_filer.py
 
 
+### 7) Find orthogroup matching a sequence set ###
+
+
+find_OG.py
+
 
 
 ### References ###
